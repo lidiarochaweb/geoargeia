@@ -1,0 +1,361 @@
+<!DOCTYPE html><html><head><meta name="x-poe-datastore-behavior" content="local_only"><meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' 'unsafe-eval' data: blob: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://code.jquery.com https://unpkg.com https://d3js.org https://threejs.org https://cdn.plot.ly https://stackpath.bootstrapcdn.com https://maps.googleapis.com https://cdn.tailwindcss.com https://ajax.googleapis.com https://kit.fontawesome.com https://cdn.datatables.net https://maxcdn.bootstrapcdn.com https://code.highcharts.com https://tako-static-assets-production.s3.amazonaws.com https://www.youtube.com https://fonts.googleapis.com https://fonts.gstatic.com https://pfst.cf2.poecdn.net https://puc.poecdn.net https://i.imgur.com https://wikimedia.org https://*.icons8.com https://*.giphy.com https://picsum.photos https://images.unsplash.com; frame-src 'self' https://www.youtube.com https://trytako.com; child-src 'self'; manifest-src 'self'; worker-src 'self'; upgrade-insecure-requests; block-all-mixed-content;"><meta http-equiv="x-dns-prefetch-control" content="off"><script src="https://puc.poecdn.net/authenticated_preview_page/standard.3ef2c256959faf5a756d.js"></script>
+    <meta charset="utf-8">
+    <title>Poe</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+  <script src="https://puc.poecdn.net/authenticated_preview_page/disableWebRTC.9710cebe07429a9e8e06.js"></script><meta name="x-poe-allow-downloads" content="true"><meta name="x-poe-datastore-behavior" content="disabled"><script src="https://puc.poecdn.net/authenticated_preview_page/tw.50ec1b0612bf5b0c30a5.js"></script><script src="https://puc.poecdn.net/authenticated_preview_page/deps.faccd16000d314dc16d5.js"></script><script src="https://puc.poecdn.net/authenticated_preview_page/exports.b0f0f482cdeb5302b0b9.js"></script><script src="https://puc.poecdn.net/authenticated_preview_page/renderer.75c73ae6b4235f62945a.js"></script><script>Object.defineProperty(exports, "__esModule", {value: true}); function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }var _react = require('react'); var _react2 = _interopRequireDefault(_react);
+
+
+var _recharts = require('recharts');
+
+
+
+var _lucidereact = require('lucide-react');
+var _framermotion = require('framer-motion');
+
+// Mock Data - Simulando dados do Portal da Transparência de PE
+const spendingData = [
+  { month: 'Jan', health: 4500000, education: 3200000, infra: 2100000 },
+  { month: 'Fev', health: 4200000, education: 3100000, infra: 2500000 },
+  { month: 'Mar', health: 4800000, education: 3500000, infra: 2800000 },
+  { month: 'Abr', health: 5100000, education: 3400000, infra: 3100000 },
+  { month: 'Mai', health: 4700000, education: 3800000, infra: 2900000 },
+  { month: 'Jun', health: 4600000, education: 3600000, infra: 3500000 },
+];
+
+const categoryData = [
+  { name: 'Saúde', value: 45, color: '#3b82f6' },
+  { name: 'Educação', value: 30, color: '#10b981' },
+  { name: 'Infraestrutura', value: 15, color: '#f59e0b' },
+  { name: 'Outros', value: 10, color: '#6b7280' },
+];
+
+const alerts = [
+  { id: 1, title: 'Aumento Incomum', desc: 'Gasto com consultoria em Recife subiu 25% em Junho.', level: 'warning' },
+  { id: 2, title: 'Licitação Aberta', desc: 'Nova licitação para pavimentação no Agreste.', level: 'info' },
+  { id: 3, title: 'Alerta de Verba', desc: 'Recursos de educação abaixo da meta trimestral.', level: 'danger' },
+];
+
+ function GeorgiaAI() {
+  const [messages, setMessages] = _react.useState.call(void 0, [
+    { role: 'bot', text: 'Olá! Eu sou a Georgia, sua assistente de transparência de Pernambuco. O que você gostaria de fiscalizar hoje?' }
+  ]);
+  const [input, setInput] = _react.useState.call(void 0, '');
+  const [isTyping, setIsTyping] = _react.useState.call(void 0, false);
+  const [activeTab, setActiveTab] = _react.useState.call(void 0, 'dashboard');
+
+  const handleSend = async () => {
+    if (!input.trim()) return;
+
+    const userMsg = { role: 'user', text: input };
+    setMessages(prev => [...prev, userMsg]);
+    setInput('');
+    setIsTyping(true);
+
+    // Simulação de processamento da IA
+    setTimeout(() => {
+      let botResponse = "Estou analisando os dados abertos do Portal da Transparência... ";
+      
+      if (input.toLowerCase().includes('saúde')) {
+        botResponse = "Identifiquei que os gastos com Saúde em Junho totalizaram R$ 4,6 milhões. Houve um pico em março devido a compras emergenciais de insumos.";
+      } else if (input.toLowerCase().includes('educação')) {
+        botResponse = "A Educação consumiu aproximadamente 30% do orçamento mensal médio. Notei que a verba para manutenção de escolas no Sertão está com execução lenta.";
+      } else if (input.toLowerCase().includes('alerta')) {
+        botResponse = "Atualmente existem 3 alertas críticos: um aumento suspeito em consultorias e a baixa execução de verbas educacionais.";
+      } else {
+        botResponse = "Não encontrei dados específicos para isso agora, mas posso analisar as planilhas de empenhos e liquidações do estado para você. Tente perguntar sobre 'Saúde' ou 'Alertas'.";
+      }
+
+      setMessages(prev => [...prev, { role: 'bot', text: botResponse }]);
+      setIsTyping(false);
+    }, 1500);
+  };
+
+  return (
+    _react2.default.createElement('div', { className: "flex h-screen bg-slate-50 text-slate-900 font-sans overflow-hidden"     ,}
+      /* Sidebar */
+      , _react2.default.createElement('aside', { className: "w-64 bg-slate-900 text-white flex flex-col"    ,}
+        , _react2.default.createElement('div', { className: "p-6 flex items-center gap-3 border-b border-slate-800"     ,}
+          , _react2.default.createElement('div', { className: "w-10 h-10 bg-blue-500 rounded-lg flex items-center justify-center"      ,}
+            , _react2.default.createElement(_lucidereact.Bot, { size: 24,} )
+          )
+          , _react2.default.createElement('h1', { className: "text-xl font-bold tracking-tight"  ,}, "GEORGIA " , _react2.default.createElement('span', { className: "text-blue-400 text-xs block"  ,}, "Fiscal de PE"  ))
+        )
+
+        , _react2.default.createElement('nav', { className: "flex-1 p-4 space-y-2"  ,}
+          , _react2.default.createElement('button', { 
+            onClick: () => setActiveTab('dashboard'),
+            className: `w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${activeTab === 'dashboard' ? 'bg-blue-600 text-white' : 'text-slate-400 hover:bg-slate-800'}`,}
+
+            , _react2.default.createElement(_lucidereact.LayoutDashboard, { size: 20,} ), " Dashboard"
+          )
+          , _react2.default.createElement('button', { 
+            onClick: () => setActiveTab('chat'),
+            className: `w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${activeTab === 'chat' ? 'bg-blue-600 text-white' : 'text-slate-400 hover:bg-slate-800'}`,}
+
+            , _react2.default.createElement(_lucidereact.MessageSquare, { size: 20,} ), " Conversar com IA"
+          )
+          , _react2.default.createElement('button', { className: "w-full flex items-center gap-3 px-4 py-3 rounded-lg text-slate-400 hover:bg-slate-800 transition-colors"         ,}
+            , _react2.default.createElement(_lucidereact.FileText, { size: 20,} ), " Relatórios"
+          )
+          , _react2.default.createElement('button', { className: "w-full flex items-center gap-3 px-4 py-3 rounded-lg text-slate-400 hover:bg-slate-800 transition-colors"         ,}
+            , _react2.default.createElement(_lucidereact.ShieldCheck, { size: 20,} ), " Denúncias"
+          )
+        )
+
+        , _react2.default.createElement('div', { className: "p-4 border-t border-slate-800"  ,}
+          , _react2.default.createElement('div', { className: "bg-slate-800 p-3 rounded-lg text-xs text-slate-400"    ,}
+            , _react2.default.createElement('p', null, "Dados atualizados em:"  )
+            , _react2.default.createElement('p', { className: "text-white font-medium" ,}, "31/08/2026")
+          )
+        )
+      )
+
+      /* Main Content */
+      , _react2.default.createElement('main', { className: "flex-1 flex flex-col overflow-hidden"   ,}
+        /* Header */
+        , _react2.default.createElement('header', { className: "h-16 bg-white border-b flex items-center justify-between px-8"      ,}
+          , _react2.default.createElement('div', { className: "flex items-center gap-2 text-slate-500"   ,}
+            , _react2.default.createElement(_lucidereact.Search, { size: 18,} )
+            , _react2.default.createElement('input', { 
+              type: "text", 
+              placeholder: "Buscar contrato, empresa ou secretaria..."    , 
+              className: "bg-transparent outline-none text-sm w-64"   ,}
+            )
+          )
+          , _react2.default.createElement('div', { className: "flex items-center gap-4"  ,}
+            , _react2.default.createElement('div', { className: "text-right hidden sm:block"  ,}
+              , _react2.default.createElement('p', { className: "text-xs text-slate-500" ,}, "Cidadão Fiscal" )
+              , _react2.default.createElement('p', { className: "text-sm font-semibold" ,}, "Acesso Público" )
+            )
+            , _react2.default.createElement('div', { className: "w-8 h-8 bg-slate-200 rounded-full flex items-center justify-center"      ,}
+              , _react2.default.createElement(_lucidereact.User, { size: 18, className: "text-slate-600",} )
+            )
+          )
+        )
+
+        , _react2.default.createElement('div', { className: "flex-1 overflow-y-auto p-8"  ,}
+          , _react2.default.createElement(_framermotion.AnimatePresence, { mode: "wait",}
+            , activeTab === 'dashboard' ? (
+              _react2.default.createElement(_framermotion.motion.div, { 
+                key: "dash",
+                initial: { opacity: 0, y: 20 },
+                animate: { opacity: 1, y: 0 },
+                exit: { opacity: 0, y: -20 },
+                className: "space-y-8",}
+
+                /* Stats Grid */
+                , _react2.default.createElement('div', { className: "grid grid-cols-1 md:grid-cols-3 gap-6"   ,}
+                  , _react2.default.createElement('div', { className: "bg-white p-6 rounded-xl border shadow-sm"    ,}
+                    , _react2.default.createElement('div', { className: "flex justify-between items-start"  ,}
+                      , _react2.default.createElement('div', null
+                        , _react2.default.createElement('p', { className: "text-slate-500 text-sm" ,}, "Gasto Total (Semestre)"  )
+                        , _react2.default.createElement('h3', { className: "text-2xl font-bold mt-1"  ,}, "R$ 24.8 Bi"  )
+                      )
+                      , _react2.default.createElement('div', { className: "p-2 bg-blue-50 text-blue-600 rounded-lg"   ,}
+                        , _react2.default.createElement(_lucidereact.TrendingUp, { size: 20,} )
+                      )
+                    )
+                    , _react2.default.createElement('p', { className: "text-xs text-green-600 mt-4 font-medium"   ,}, "↑ 2.4% em relação ao ano anterior"      )
+                  )
+                  , _react2.default.createElement('div', { className: "bg-white p-6 rounded-xl border shadow-sm"    ,}
+                    , _react2.default.createElement('div', { className: "flex justify-between items-start"  ,}
+                      , _react2.default.createElement('div', null
+                        , _react2.default.createElement('p', { className: "text-slate-500 text-sm" ,}, "Contratos Ativos" )
+                        , _react2.default.createElement('h3', { className: "text-2xl font-bold mt-1"  ,}, "1,240")
+                      )
+                      , _react2.default.createElement('div', { className: "p-2 bg-purple-50 text-purple-600 rounded-lg"   ,}
+                        , _react2.default.createElement(_lucidereact.FileText, { size: 20,} )
+                      )
+                    )
+                    , _react2.default.createElement('p', { className: "text-xs text-slate-500 mt-4"  ,}, "Atualizado via API do Estado"    )
+                  )
+                  , _react2.default.createElement('div', { className: "bg-white p-6 rounded-xl border shadow-sm"    ,}
+                    , _react2.default.createElement('div', { className: "flex justify-between items-start"  ,}
+                      , _react2.default.createElement('div', null
+                        , _react2.default.createElement('p', { className: "text-slate-500 text-sm" ,}, "Alertas de Risco"  )
+                        , _react2.default.createElement('h3', { className: "text-2xl font-bold mt-1 text-red-600"   ,}, "03")
+                      )
+                      , _react2.default.createElement('div', { className: "p-2 bg-red-50 text-red-600 rounded-lg"   ,}
+                        , _react2.default.createElement(_lucidereact.AlertTriangle, { size: 20,} )
+                      )
+                    )
+                    , _react2.default.createElement('p', { className: "text-xs text-red-500 mt-4 font-medium"   ,}, "Requer atenção imediata"  )
+                  )
+                )
+
+                /* Charts Section */
+                , _react2.default.createElement('div', { className: "grid grid-cols-1 lg:grid-cols-2 gap-6"   ,}
+                  , _react2.default.createElement('div', { className: "bg-white p-6 rounded-xl border shadow-sm"    ,}
+                    , _react2.default.createElement('h4', { className: "font-semibold mb-6" ,}, "Evolução de Gastos por Setor (Milhões R$)"      )
+                    , _react2.default.createElement('div', { className: "h-64",}
+                      , _react2.default.createElement(_recharts.ResponsiveContainer, { width: "100%", height: "100%",}
+                        , _react2.default.createElement(_recharts.AreaChart, { data: spendingData,}
+                          , _react2.default.createElement('defs', null
+                            , _react2.default.createElement('linearGradient', { id: "colorHealth", x1: "0", y1: "0", x2: "0", y2: "1",}
+                              , _react2.default.createElement('stop', { offset: "5%", stopColor: "#3b82f6", stopOpacity: 0.1,})
+                              , _react2.default.createElement('stop', { offset: "95%", stopColor: "#3b82f6", stopOpacity: 0,})
+                            )
+                          )
+                          , _react2.default.createElement(_recharts.CartesianGrid, { strokeDasharray: "3 3" , vertical: false, stroke: "#f1f5f9",} )
+                          , _react2.default.createElement(_recharts.XAxis, { dataKey: "month", axisLine: false, tickLine: false, tick: {fontSize: 12},} )
+                          , _react2.default.createElement(_recharts.YAxis, { axisLine: false, tickLine: false, tick: {fontSize: 12},} )
+                          , _react2.default.createElement(_recharts.Tooltip, null )
+                          , _react2.default.createElement(_recharts.Area, { type: "monotone", dataKey: "health", stroke: "#3b82f6", fillOpacity: 1, fill: "url(#colorHealth)", strokeWidth: 2,} )
+                          , _react2.default.createElement(_recharts.Area, { type: "monotone", dataKey: "education", stroke: "#10b981", fill: "transparent", strokeWidth: 2,} )
+                          , _react2.default.createElement(_recharts.Area, { type: "monotone", dataKey: "infra", stroke: "#f59e0b", fill: "transparent", strokeWidth: 2,} )
+                        )
+                      )
+                    )
+                  )
+
+                  , _react2.default.createElement('div', { className: "bg-white p-6 rounded-xl border shadow-sm"    ,}
+                    , _react2.default.createElement('h4', { className: "font-semibold mb-6" ,}, "Distribuição Orçamentária" )
+                    , _react2.default.createElement('div', { className: "h-64 flex items-center justify-center"   ,}
+                      , _react2.default.createElement(_recharts.ResponsiveContainer, { width: "100%", height: "100%",}
+                        , _react2.default.createElement(_recharts.PieChart, null
+                          , _react2.default.createElement(_recharts.Pie, {
+                            data: categoryData,
+                            cx: "50%",
+                            cy: "50%",
+                            innerRadius: 60,
+                            outerRadius: 80,
+                            paddingAngle: 5,
+                            dataKey: "value",}
+
+                            , categoryData.map((entry, index) => (
+                              _react2.default.createElement(_recharts.Cell, { key: `cell-${index}`, fill: entry.color,} )
+                            ))
+                          )
+                          , _react2.default.createElement(_recharts.Tooltip, null )
+                        )
+                      )
+                      , _react2.default.createElement('div', { className: "absolute flex flex-col gap-2 text-xs"    ,}
+                        , categoryData.map(cat => (
+                          _react2.default.createElement('div', { key: cat.name, className: "flex items-center gap-2"  ,}
+                            , _react2.default.createElement('div', { className: "w-3 h-3 rounded-full"  , style: {backgroundColor: cat.color},} )
+                            , _react2.default.createElement('span', null, cat.name)
+                          )
+                        ))
+                      )
+                    )
+                  )
+                )
+
+                /* Alerts List */
+                , _react2.default.createElement('div', { className: "bg-white rounded-xl border shadow-sm overflow-hidden"    ,}
+                  , _react2.default.createElement('div', { className: "p-6 border-b" ,}
+                    , _react2.default.createElement('h4', { className: "font-semibold",}, "Alertas da Georgia"  )
+                  )
+                  , _react2.default.createElement('div', { className: "divide-y",}
+                    , alerts.map(alert => (
+                      _react2.default.createElement('div', { key: alert.id, className: "p-4 flex items-center gap-4 hover:bg-slate-50 transition-colors"     ,}
+                        , _react2.default.createElement('div', { className: `p-2 rounded-full ${
+                          alert.level === 'danger' ? 'bg-red-100 text-red-600' : 
+                          alert.level === 'warning' ? 'bg-yellow-100 text-yellow-600' : 'bg-blue-100 text-blue-600'
+                        }`,}
+                          , _react2.default.createElement(_lucidereact.AlertTriangle, { size: 18,} )
+                        )
+                        , _react2.default.createElement('div', { className: "flex-1",}
+                          , _react2.default.createElement('p', { className: "text-sm font-semibold" ,}, alert.title)
+                          , _react2.default.createElement('p', { className: "text-xs text-slate-500" ,}, alert.desc)
+                        )
+                        , _react2.default.createElement('button', { className: "text-xs font-medium text-blue-600 hover:underline"   ,}, "Ver Detalhes" )
+                      )
+                    ))
+                  )
+                )
+              )
+            ) : (
+              _react2.default.createElement(_framermotion.motion.div, { 
+                key: "chat",
+                initial: { opacity: 0, scale: 0.95 },
+                animate: { opacity: 1, scale: 1 },
+                exit: { opacity: 0, scale: 0.95 },
+                className: "h-full flex flex-col bg-white rounded-2xl border shadow-lg overflow-hidden max-w-4xl mx-auto"         ,}
+
+                /* Chat Header */
+                , _react2.default.createElement('div', { className: "p-4 bg-slate-900 text-white flex items-center gap-3"     ,}
+                  , _react2.default.createElement('div', { className: "w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center"      ,}
+                    , _react2.default.createElement(_lucidereact.Bot, { size: 24,} )
+                  )
+                  , _react2.default.createElement('div', null
+                    , _react2.default.createElement('h3', { className: "font-bold",}, "Georgia AI" )
+                    , _react2.default.createElement('p', { className: "text-xs text-blue-300 flex items-center gap-1"    ,}
+                      , _react2.default.createElement('span', { className: "w-2 h-2 bg-green-400 rounded-full animate-pulse"    ,} ), " Online | Analisando Dados Abertos"
+                    )
+                  )
+                )
+
+                /* Chat Messages */
+                , _react2.default.createElement('div', { className: "flex-1 overflow-y-auto p-6 space-y-4 bg-slate-50"    ,}
+                  , messages.map((msg, idx) => (
+                    _react2.default.createElement('div', { key: idx, className: `flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`,}
+                      , _react2.default.createElement('div', { className: `flex gap-3 max-w-[80%] ${msg.role === 'user' ? 'flex-row-reverse' : ''}`,}
+                        , _react2.default.createElement('div', { className: `w-8 h-8 rounded-full flex items-center justify-center shrink-0 ${
+                          msg.role === 'user' ? 'bg-slate-300' : 'bg-blue-600 text-white'
+                        }`,}
+                          , msg.role === 'user' ? _react2.default.createElement(_lucidereact.User, { size: 16,} ) : _react2.default.createElement(_lucidereact.Bot, { size: 16,} )
+                        )
+                        , _react2.default.createElement('div', { className: `p-3 rounded-2xl text-sm ${
+                          msg.role === 'user' 
+                            ? 'bg-blue-600 text-white rounded-tr-none' 
+                            : 'bg-white border text-slate-700 rounded-tl-none shadow-sm'
+                        }`,}
+                          , msg.text
+                        )
+                      )
+                    )
+                  ))
+                  , isTyping && (
+                    _react2.default.createElement('div', { className: "flex justify-start" ,}
+                      , _react2.default.createElement('div', { className: "flex gap-3" ,}
+                        , _react2.default.createElement('div', { className: "w-8 h-8 rounded-full bg-blue-600 text-white flex items-center justify-center"       ,}
+                          , _react2.default.createElement(_lucidereact.Bot, { size: 16,} )
+                        )
+                        , _react2.default.createElement('div', { className: "bg-white border p-3 rounded-2xl rounded-tl-none shadow-sm"     ,}
+                          , _react2.default.createElement('div', { className: "flex gap-1" ,}
+                            , _react2.default.createElement('div', { className: "w-1.5 h-1.5 bg-slate-400 rounded-full animate-bounce"    ,} )
+                            , _react2.default.createElement('div', { className: "w-1.5 h-1.5 bg-slate-400 rounded-full animate-bounce [animation-delay:0.2s]"     ,} )
+                            , _react2.default.createElement('div', { className: "w-1.5 h-1.5 bg-slate-400 rounded-full animate-bounce [animation-delay:0.4s]"     ,} )
+                          )
+                        )
+                      )
+                    )
+                  )
+                )
+
+                /* Chat Input */
+                , _react2.default.createElement('div', { className: "p-4 border-t bg-white"  ,}
+                  , _react2.default.createElement('div', { className: "flex gap-2" ,}
+                    , _react2.default.createElement('input', { 
+                      type: "text", 
+                      value: input,
+                      onChange: (e) => setInput(e.target.value),
+                      onKeyPress: (e) => e.key === 'Enter' && handleSend(),
+                      placeholder: "Ex: Quanto foi gasto com saúde em junho?"       , 
+                      className: "flex-1 p-3 border rounded-xl outline-none focus:ring-2 focus:ring-blue-500 transition-all text-sm"        ,}
+                    )
+                    , _react2.default.createElement('button', { 
+                      onClick: handleSend,
+                      className: "p-3 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition-colors"     ,}
+
+                      , _react2.default.createElement(_lucidereact.Send, { size: 20,} )
+                    )
+                  )
+                  , _react2.default.createElement('p', { className: "text-[10px] text-center text-slate-400 mt-3"   ,}, "A Georgia utiliza dados do Portal da Transparência de PE. Sempre verifique a fonte oficial."
+
+                  )
+                )
+              )
+            )
+          )
+        )
+      )
+    )
+  );
+} exports.default = GeorgiaAI;
+</script></head>
+  <body>
+  
+
+<div id="preview-app"></div></body></html>
